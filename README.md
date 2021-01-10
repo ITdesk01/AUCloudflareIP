@@ -1,0 +1,2 @@
+# AUCloudflareIP
+调用XIU2/CloudflareSpeedTest，并自动替换openwrt上的酸酸地址
