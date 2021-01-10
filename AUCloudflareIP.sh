@@ -10,6 +10,24 @@ white="\033[0m"
 
 	
 start() {
+	#添加系统变量
+	checkjs_path=$(cat /etc/profile | grep -o AUCloudflareIP.sh | wc -l)
+	if [ "$checkjs_path" == "0" ]; then
+		echo "export AUCI_file=/usr/share/AUCloudflareIP" |  tee -a /etc/profile
+		echo "export AUCI=/usr/share/AUCloudflareIP/AUCloudflareIP.sh" |  tee -a /etc/profile
+		echo "-----------------------------------------------------------------------"
+		echo ""
+		echo -e "$green添加AUCI变量成功,重启系统以后无论在那个目录输入 sh \$AUCI 都可以运行脚本$white"
+		echo ""
+		echo ""
+		echo -e "          $green直接回车会重启你的系统!!!，如果不需要马上重启ctrl+c取消$white"
+		echo "-----------------------------------------------------------------------"
+		read a
+		reboot
+	else
+		echo ""
+	fi
+
 	cd  $Script_file
 	clear
 	echo "----------------------------------------------"

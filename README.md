@@ -12,3 +12,9 @@ cd /usr/share/AUCloudflareIP && chmod +x AUCloudflareIP.sh
 sh AUCloudflareIP.sh
 ```
 
+## 二次调用
+
+sh $AUCI        #调用脚本
+sh $AUCI_file   #进入脚本所在目录
+
+
