@@ -39,7 +39,7 @@ start() {
 		if [ $cron_if  = "1" ]; then
 			echo ""		
 		else
-			echo "30 10 * * * /usr/share/AUCloudflareIP.sh >/tmp/AUCloudflareIP.log 2>&1" >>/etc/crontabs/root
+			echo "30 10 * * * /usr/share/AUCloudflareIP.sh >/tmp/AUCloudflareIP_update.log 2>&1" >>/etc/crontabs/root
 			echo "45 10 * * * /usr/share/AUCloudflareIP.sh update_script >/tmp/AUCloudflareIP.log 2>&1" >>/etc/crontabs/root
 			/etc/init.d/cron restart
 		fi
