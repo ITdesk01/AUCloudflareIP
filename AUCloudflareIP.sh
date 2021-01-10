@@ -48,7 +48,8 @@ start() {
 
 update_script() {
 	cd $Script_file
-	git_pull
+	git fetch --all
+	git reset --hard origin/main
 	chmod +x AUCloudflareIP.sh
 }
 
