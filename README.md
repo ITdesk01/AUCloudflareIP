@@ -18,3 +18,8 @@ sh $AUCI        #调用脚本
 sh $AUCI_file   #进入脚本所在目录
 
 
+## 问题
+1.如何重新出现“请输入你现在酸酸使用的IP或者域名：“这句提示
+答：删除/usr/share/AUCloudflareIP/old_ip.txt ,重新执行脚本即可
+
+
