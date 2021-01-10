@@ -11,6 +11,7 @@ white="\033[0m"
 	
 start() {
 	cd  $Script_file
+	clear
 	echo "----------------------------------------------"
 	echo -e "$green AUCloudflareIP $version $white"
 	echo "----------------------------------------------"
@@ -18,8 +19,7 @@ start() {
 	if [ -f old_ip.txt ]; then
 		echo ""		
 	else
-		clear
-		read  -p "$green请输入你现在酸酸使用的IP或者域名：$white" suansuan
+		read  -p "请输入你现在酸酸使用的IP或者域名：" suansuan
 		echo $suansuan > old_ip.txt
 	fi
 	
