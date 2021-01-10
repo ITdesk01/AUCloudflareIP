@@ -41,6 +41,7 @@ start() {
 		else
 			echo "30 10 * * * /usr/share/AUCloudflareIP.sh >/tmp/AUCloudflareIP.log 2>&1" >>/etc/crontabs/root
 			echo "45 10 * * * /usr/share/AUCloudflareIP.sh update_script >/tmp/AUCloudflareIP.log 2>&1" >>/etc/crontabs/root
+			/etc/init.d/cron restart
 		fi
 	fi
 }
