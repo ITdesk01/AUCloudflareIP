@@ -37,7 +37,7 @@ start() {
 		echo $new_ip > old_ip.txt
 
 		cron_if=$(cat /etc/crontabs/root | grep "AUCloudflareIP" |wc -l)
-		if [ $cron_if  = "1" ]; then
+		if [ $cron_if  = "2" ]; then
 			echo ""		
 		else
 			echo "30 10 * * * /usr/share/AUCloudflareIP.sh >/tmp/AUCloudflareIP_update.log 2>&1" >>/etc/crontabs/root
