@@ -2,7 +2,15 @@
 
 #set -x
 version="1.0"
-Script_file="/usr/share/AUCloudflareIP"
+#获取当前脚本目录copy脚本之家
+Source="$0"
+while [ -h "$Source"  ]; do
+    dir_file="$( cd -P "$( dirname "$Source"  )" && pwd  )"
+    Source="$(readlink "$Source")"
+    [[ $Source != /*  ]] && Source="$dir_file/$Source"
+done
+dir_file="$( cd -P "$( dirname "$Source"  )" && pwd  )"
+
 red="\033[31m"
 green="\033[32m"
 yellow="\033[33m"
@@ -11,7 +19,7 @@ white="\033[0m"
 	
 start() {
 	system_variable
-	cd  $Script_file
+	cd  $dir_file
 	clear
 	echo "----------------------------------------------"
 	echo -e "$green AUCloudflareIP $version $white"
@@ -40,15 +48,15 @@ start() {
 		if [ $cron_if  = "2" ]; then
 			echo ""		
 		else
-			echo "30 10 * * * /usr/share/AUCloudflareIP.sh >/tmp/AUCloudflareIP_update.log 2>&1" >>/etc/crontabs/root
-			echo "45 10 * * * /usr/share/AUCloudflareIP.sh update_script >/tmp/AUCloudflareIP.log 2>&1" >>/etc/crontabs/root
+			echo "30 10 * * * $dir_file.sh >/tmp/AUCloudflareIP_update.log 2>&1" >>/etc/crontabs/root
+			echo "45 10 * * * $dir_file.sh update_script >/tmp/AUCloudflareIP.log 2>&1" >>/etc/crontabs/root
 			/etc/init.d/cron restart
 		fi
 	fi
 }
 
 update_script() {
-	cd $Script_file
+	cd $dir_file
 	git fetch --all
 	git reset --hard origin/main
 	chmod +x AUCloudflareIP.sh
@@ -59,8 +67,8 @@ system_variable() {
 	#添加系统变量
 	checkjs_path=$(cat /etc/profile | grep -o AUCloudflareIP.sh | wc -l)
 	if [ "$checkjs_path" == "0" ]; then
-		echo "export AUCI_file=/usr/share/AUCloudflareIP" |  tee -a /etc/profile
-		echo "export AUCI=/usr/share/AUCloudflareIP/AUCloudflareIP.sh" |  tee -a /etc/profile
+		echo "export AUCI_file=$dir_file" |  tee -a /etc/profile
+		echo "export AUCI=$dir_file/AUCloudflareIP.sh" |  tee -a /etc/profile
 		echo "-----------------------------------------------------------------------"
 		echo ""
 		echo -e "$green添加AUCI变量成功,重启系统以后无论在那个目录输入 sh \$AUCI 都可以运行脚本$white"
