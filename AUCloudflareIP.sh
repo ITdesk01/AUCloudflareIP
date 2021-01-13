@@ -65,8 +65,8 @@ update_script() {
 
 system_variable() {
 	#添加系统变量
-	checkjs_path=$(cat /etc/profile | grep -o AUCloudflareIP.sh | wc -l)
-	if [ "$checkjs_path" == "0" ]; then
+	auci_path=$(cat /etc/profile | grep -o AUCloudflareIP.sh | wc -l)
+	if [ "$auci_path" == "0" ]; then
 		echo "export AUCI_file=$dir_file" |  tee -a /etc/profile
 		echo "export AUCI=$dir_file/AUCloudflareIP.sh" |  tee -a /etc/profile
 		echo "-----------------------------------------------------------------------"
