@@ -2,6 +2,7 @@
 
 #set -x
 version="1.1"
+cron_file="/etc/crontabs/root"
 #获取当前脚本目录copy脚本之家
 Source="$0"
 while [ -h "$Source"  ]; do
