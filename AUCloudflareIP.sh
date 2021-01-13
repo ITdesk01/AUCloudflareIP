@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #set -x
-version="1.0"
+version="1.1"
 #获取当前脚本目录copy脚本之家
 Source="$0"
 while [ -h "$Source"  ]; do
@@ -18,6 +18,7 @@ white="\033[0m"
 
 	
 start() {
+	task
 	system_variable
 	cd  $dir_file
 	clear
@@ -43,15 +44,6 @@ start() {
 		/etc/init.d/shadowsocksr restart
 		echo -e "$green将旧IP:$white${suansuan}$green替换为新IP:$white${new_ip}$green,并重启酸酸$white"
 		echo $new_ip > old_ip.txt
-
-		cron_if=$(cat /etc/crontabs/root | grep "AUCloudflareIP" |wc -l)
-		if [ $cron_if  = "2" ]; then
-			echo ""		
-		else
-			echo "30 10 * * * $dir_file/AUCloudflareIP.sh >/tmp/AUCloudflareIP_update.log 2>&1" >>/etc/crontabs/root
-			echo "45 10 * * * $dir_file/AUCloudflareIP.sh update_script >/tmp/AUCloudflareIP.log 2>&1" >>/etc/crontabs/root
-			/etc/init.d/cron restart
-		fi
 	fi
 }
 
@@ -63,21 +55,48 @@ update_script() {
 	chmod +x CloudflareST
 }
 
+task() {
+	cron_version="1.0"
+	if [[ `grep -o "AUCloudflareIP的定时任务$cron_version" $cron_file |wc -l` == "0" ]]; then
+		echo "不存在计划任务开始设置"
+		task_delete
+		task_add
+		echo "计划任务设置完成"
+	elif [[ `grep -o "AUCloudflareIP的定时任务$cron_version" $cron_file |wc -l` == "1" ]]; then
+			echo "计划任务与设定一致，不做改变"
+	fi
+
+}
+task_add() {
+cat >>/etc/crontabs/root <<EOF
+###########这里是AUCloudflareIP的定时任务$cron_version版本###########
+30 10 * * * $dir_file.sh >/tmp/AUCloudflareIP_update.log 2>&1
+45 10 * * * $dir_file.sh update_script >/tmp/AUCloudflareIP.log 2>&1
+###########101##########请将其他定时任务放到底下###############
+EOF
+/etc/init.d/cron restart
+}
+task_delete() {
+	sed -i '/AUCloudflareIP/d' /etc/crontabs/root >/dev/null 2>&1
+	sed -i '/####/d' /etc/crontabs/root >/dev/null 2>&1
+}
+
+ds_setup() {
+	echo "AUCloudflareIP删除定时任务设置"
+	task_delete
+	echo "AUCloudflareIP删除全局变量"
+	sed -i '/AUCloudflareIP/d' /etc/profile >/dev/null 2>&1
+	. /etc/profile
+	echo "AUCloudflareIP定时任务和全局变量删除完成，脚本不会自动运行了"
+}
+
 system_variable() {
 	#添加系统变量
 	auci_path=$(cat /etc/profile | grep -o AUCloudflareIP.sh | wc -l)
 	if [ "$auci_path" == "0" ]; then
 		echo "export AUCI_file=$dir_file" |  tee -a /etc/profile
 		echo "export AUCI=$dir_file/AUCloudflareIP.sh" |  tee -a /etc/profile
-		echo "-----------------------------------------------------------------------"
-		echo ""
-		echo -e "$green添加AUCI变量成功,重启系统以后无论在那个目录输入 sh \$AUCI 都可以运行脚本$white"
-		echo ""
-		echo ""
-		echo -e "          $green重启以后就可以看到效果了$white"
-		echo "-----------------------------------------------------------------------"
-	else
-		echo ""
+		. /etc/profile
 	fi
 }
 
