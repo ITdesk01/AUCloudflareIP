@@ -48,8 +48,8 @@ start() {
 		if [ $cron_if  = "2" ]; then
 			echo ""		
 		else
-			echo "30 10 * * * $dir_file.sh >/tmp/AUCloudflareIP_update.log 2>&1" >>/etc/crontabs/root
-			echo "45 10 * * * $dir_file.sh update_script >/tmp/AUCloudflareIP.log 2>&1" >>/etc/crontabs/root
+			echo "30 10 * * * $dir_file/AUCloudflareIP.sh >/tmp/AUCloudflareIP_update.log 2>&1" >>/etc/crontabs/root
+			echo "45 10 * * * $dir_file/AUCloudflareIP.sh update_script >/tmp/AUCloudflareIP.log 2>&1" >>/etc/crontabs/root
 			/etc/init.d/cron restart
 		fi
 	fi
