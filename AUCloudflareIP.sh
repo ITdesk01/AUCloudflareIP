@@ -70,7 +70,7 @@ task() {
 }
 task_add() {
 cat >>/etc/crontabs/root <<EOF
-###########这里是AUCloudflareIP的定时任务$cron_version版本###########
+#**********这里是AUCloudflareIP的定时任务$cron_version版本**********#
 30 10 * * * $dir_file.sh >/tmp/AUCloudflareIP_update.log 2>&1
 45 10 * * * $dir_file.sh update_script >/tmp/AUCloudflareIP.log 2>&1
 ###########101##########请将其他定时任务放到底下###############
