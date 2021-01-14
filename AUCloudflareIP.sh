@@ -57,7 +57,7 @@ update_script() {
 }
 
 task() {
-	cron_version="1.0"
+	cron_version="1.1"
 	if [[ `grep -o "AUCloudflareIP的定时任务$cron_version" $cron_file |wc -l` == "0" ]]; then
 		echo "不存在计划任务开始设置"
 		task_delete
