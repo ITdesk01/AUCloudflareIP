@@ -57,7 +57,7 @@ update_script() {
 }
 
 task() {
-	cron_version="1.1"
+	cron_version="1.2"
 	if [[ `grep -o "AUCloudflareIP的定时任务$cron_version" $cron_file |wc -l` == "0" ]]; then
 		echo "不存在计划任务开始设置"
 		task_delete
@@ -73,13 +73,13 @@ cat >>/etc/crontabs/root <<EOF
 #**********这里是AUCloudflareIP的定时任务$cron_version版本**********#
 30 10 * * * $dir_file.sh >/tmp/AUCloudflareIP_update.log 2>&1
 45 10 * * * $dir_file.sh update_script >/tmp/AUCloudflareIP.log 2>&1
-###########101##########请将其他定时任务放到底下###############
+######101##########请将其他定时任务放到底下########
 EOF
 /etc/init.d/cron restart
 }
 task_delete() {
 	sed -i '/AUCloudflareIP/d' /etc/crontabs/root >/dev/null 2>&1
-	sed -i '/####/d' /etc/crontabs/root >/dev/null 2>&1
+	sed -i '/#101#/d' /etc/crontabs/root >/dev/null 2>&1
 }
 
 ds_setup() {
