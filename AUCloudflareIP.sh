@@ -19,6 +19,12 @@ white="\033[0m"
 
 	
 start() {
+	if [ ! -x $dir_file/AUCloudflareIP.sh ];then
+		echo "添加权限"
+		chmod 755 $dir_file/AUCloudflareIP.sh
+		chmod 755 $dir_file/CloudflareST
+		sh $dir_file/AUCloudflareIP.sh
+	fi
 	task
 	system_variable
 	cd  $dir_file
@@ -49,10 +55,6 @@ start() {
 }
 
 update_script() {
-	if [ ! -x $dir_file/AUCloudflareIP.sh ];then
-		chmod 755 $dir_file/AUCloudflareIP.sh
-		chmod 755 $dir_file/CloudflareST
-	fi
 	cd $dir_file
 	git fetch --all
 	git reset --hard origin/main
