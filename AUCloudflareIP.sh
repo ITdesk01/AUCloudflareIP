@@ -49,11 +49,13 @@ start() {
 }
 
 update_script() {
+	if [ ! -x $dir_file/AUCloudflareIP.sh ];then
+		chmod +x $dir_file/AUCloudflareIP.sh
+		chmod +x $dir_file/CloudflareST
+	fi
 	cd $dir_file
 	git fetch --all
 	git reset --hard origin/main
-	chmod +x AUCloudflareIP.sh
-	chmod +x CloudflareST
 }
 
 task() {
