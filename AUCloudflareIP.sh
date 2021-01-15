@@ -50,8 +50,8 @@ start() {
 
 update_script() {
 	if [ ! -x $dir_file/AUCloudflareIP.sh ];then
-		chmod +x $dir_file/AUCloudflareIP.sh
-		chmod +x $dir_file/CloudflareST
+		chmod 755 $dir_file/AUCloudflareIP.sh
+		chmod 755 $dir_file/CloudflareST
 	fi
 	cd $dir_file
 	git fetch --all
