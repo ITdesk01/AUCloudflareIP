@@ -48,7 +48,8 @@ start() {
 		suansuan=$(cat old_ip.txt)
 		if_speed=$(cat result.txt | awk -F '[ ,]+' 'NR==2 {print $6}')
 		if [ $if_speed -ge "5"];then
-			echo "IP速度太慢重新跑"
+			echo -e "$yellow IP速度太慢重新跑，休息5分钟重新跑$white"
+			sleep 5m
 			start
 		else
 			new_ip=$(cat result.txt | awk -F '[ ,]+' 'NR==2 {print $1}')
