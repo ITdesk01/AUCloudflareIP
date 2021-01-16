@@ -48,15 +48,15 @@ start() {
 		suansuan=$(cat old_ip.txt)
 		if_speed=$(cat result.txt | awk -F '[ ,]+' 'NR==2 {print $6}')
 		if [ $if_speed -ge "5"];then
-			echo -e "$yellow IP速度太慢重新跑，休息5分钟重新跑$white"
-			sleep 5m
-			start
-		else
 			new_ip=$(cat result.txt | awk -F '[ ,]+' 'NR==2 {print $1}')
 			sed -i "s/$suansuan/$new_ip/g" /etc/config/shadowsocksr
 			/etc/init.d/shadowsocksr restart
 			echo -e "$green将旧IP:$white${suansuan}$green替换为新IP:$white${new_ip}$green,并重启酸酸$white"
 			echo $new_ip > old_ip.txt
+		else
+			echo -e "$yellow IP速度太慢重新跑，休息5分钟重新跑$white"
+			sleep 5m
+			start
 		fi
 	fi
 }
