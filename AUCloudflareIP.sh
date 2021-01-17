@@ -40,14 +40,14 @@ start() {
 		echo $suansuan > old_ip.txt
 	fi
 	
-	./CloudflareST -n 1000 -sl 1 -p 1 -o result.txt
+	./CloudflareST -n 1000 -sl 1 -p 1 -dn 2 -o result.txt
 	
 	if [ ! result.txt ]; then
 		echo "文件为空，不做改变"
 	else
 		suansuan=$(cat old_ip.txt)
-		if_speed=$(cat result.txt | awk -F '[ ,]+' 'NR==2 {print $6}')
-		if [ $if_speed -ge "5"];then
+		if_speed=$(cat result.txt | awk -F '[ ,]+' 'NR==2 {print $6}'| awk -F. '{print $1}')
+		if [ $if_speed -ge "5" ];then
 			new_ip=$(cat result.txt | awk -F '[ ,]+' 'NR==2 {print $1}')
 			sed -i "s/$suansuan/$new_ip/g" /etc/config/shadowsocksr
 			/etc/init.d/shadowsocksr restart
