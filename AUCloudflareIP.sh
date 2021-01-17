@@ -47,7 +47,7 @@ start() {
 	else
 		suansuan=$(cat old_ip.txt)
 		if_speed=$(cat result.txt | awk -F '[ ,]+' 'NR==2 {print $6}'| awk -F. '{print $1}')
-		if [ $if_speed -ge "5" ];then
+		if [ $if_speed -ge "3" ];then
 			new_ip=$(cat result.txt | awk -F '[ ,]+' 'NR==2 {print $1}')
 			sed -i "s/$suansuan/$new_ip/g" /etc/config/shadowsocksr
 			/etc/init.d/shadowsocksr restart
