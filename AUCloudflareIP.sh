@@ -40,7 +40,7 @@ start() {
 		echo $suansuan > old_ip.txt
 	fi
 	
-	./CloudflareST -n 1000 -sl 1 -p 1 -dn 2 -o result.txt
+	./CloudflareST_1.48 -o result.txt
 	
 	if [ ! result.txt ]; then
 		echo "文件为空，不做改变"
