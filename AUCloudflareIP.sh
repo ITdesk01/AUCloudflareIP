@@ -33,6 +33,7 @@ start() {
 	echo -e "$green AUCloudflareIP $version $white"
 	echo "----------------------------------------------"
 	echo -e "$green 当前时间：$white`date "+%Y-%m-%d %H:%M"`"
+	echo -e "$yellow 删除所有设置：$green sh \$AUCI ds_setup$white"
 	if [ -f old_ip.txt ]; then
 		echo ""		
 	else
@@ -119,7 +120,7 @@ if [ -z $action1 ]; then
 	start
 else
 	case "$action1" in
-			start|update_script|system_variable)
+			start|update_script|system_variable|ds_setup)
 			$action1
 			;;
 			*)
