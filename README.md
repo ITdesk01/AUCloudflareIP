@@ -1,3 +1,6 @@
+# 不再维护下一步看看删除掉
+
+
 # AUCloudflareIP
 调用https://github.com/XIU2/CloudflareSpeedTest 得到新的IP，并自动替换openwrt上的酸酸地址
 
